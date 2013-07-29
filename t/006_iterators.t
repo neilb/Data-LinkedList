@@ -4,15 +4,12 @@
 
 use strict;
 use warnings;
-use Test::More tests => 14;
+use Test::More tests => 17;
 use Data::LinkedList;
-use Data::LinkedList::Iterator::ListIterator;
-use Data::LinkedList::Iterator::DescendingIterator;
 
 my $list = Data::LinkedList->new();
    $list->add_all((1, 2, 3, 4, 5));
 my $iterator = $list->list_iterator(0);
-my $desc_iterator = $list->descending_iterator();
 
 # Check position is correct.
 ok $iterator->next_index() == 0;
@@ -49,3 +46,12 @@ ok $iterator->previous() eq 1;
    $iterator->set(0);
 ok $iterator->next() eq 0;
    $iterator = undef;
+
+# Descending iterator. Need to test this after
+# to avoid any concurrent modifications.   
+my $desc_iterator = $list->descending_iterator();
+ok $desc_iterator->has_next();
+ok $desc_iterator->next() eq 5;
+   $desc_iterator->next();
+   $desc_iterator->remove();
+ok $desc_iterator->next() eq 3;

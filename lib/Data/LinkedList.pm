@@ -1,7 +1,3 @@
-#############################################
-# docs
-#############################################
-
 package Data::LinkedList;
 
 use strict;
@@ -17,7 +13,7 @@ require Exporter;
 
 our @ISA = qw(Exporter);
 our @EXPORT = qw();
-our $VERSION = '0.01';
+our $VERSION = '0.1';
 
 sub new {
     my ($class, %params) = @_;
@@ -53,7 +49,7 @@ sub __remove_entry {
     if ($self->{size} == 0) {
         $self->{first} = $self->{last} = undef;
     } elsif ($entry == $self->{first}) {
-        $self->{first} = $entry->{next};
+        $self->{first} = $entry->{next};        
         $entry->{next}->{previous} = undef;
     } elsif ($entry == $self->{last}) {
         $self->{last} = $entry->{previous};
@@ -93,9 +89,10 @@ sub __check_bounds_exclusive {
     my ($self, $index) = @_;
 
     if (($index < 0) || ($index >= $self->{size})) {
-        croak
+        croak(
             'Index out of bounds: The index provided was out of range.' . "\n" .
             'Index: ' . $index . ' Size :' . $self->{size};
+        );
     }
 }
 
@@ -499,3 +496,5 @@ sub descending_iterator {
 }
 
 1;
+
+__END__
