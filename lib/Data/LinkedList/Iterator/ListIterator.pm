@@ -18,9 +18,9 @@ sub new {
         list          => undef,
     };
     
-	while (my ($key, $value) = each %params) {
-		$self->{$key} = $value if exists $self->{$key};
-	}
+    while (my ($key, $value) = each %params) {
+        $self->{$key} = $value if exists $self->{$key};
+    }
     
     if ($self->{index} == $self->{list}->{size}) {
         $self->{next} = undef;
