@@ -1,13 +1,10 @@
-
-
 use ExtUtils::MakeMaker;
-# See lib/ExtUtils/MakeMaker.pm for details of how to influence
-# the contents of the Makefile that is written.
+
 WriteMakefile(
     NAME         => 'Data::LinkedList',
-    VERSION_FROM => 'lib/Data/LinkedList.pm', # finds \$VERSION
-    AUTHOR       => 'Lloyd Griffiths (lloyd.griffiths.sw@gmail.com)',
-    ABSTRACT     => 'Perl implementation of the GNU classpath LinkedList.',
+    VERSION_FROM => 'lib/Data/LinkedList.pm',
+    AUTHOR       => 'Lloyd Griffiths (lloydg@cpan.org)',
+    ABSTRACT     => 'Perl implementation of the GNU Classpath LinkedList.',
     LICENSE => 'perl',
     META_MERGE => {
         resources => {
@@ -15,6 +12,8 @@ WriteMakefile(
         },
     },
     PREREQ_PM    => {
-        'Test::Simple' => 0.44,
+        'Test::Simple'   => 0.44,
+        'Storable'       => 2.34,
+        'Iterator::Util' => 0.02,
     },
 );
