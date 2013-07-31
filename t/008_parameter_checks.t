@@ -10,7 +10,7 @@ use Data::LinkedList::Iterator::ListIterator;
 
 my $list = Data::LinkedList->new();
 
-# All of these subroutines expect at least 2 
+# All of these subroutines expect at least 2
 # parameters (the object always being first).
 ok not eval { $list->add_first(); };
 ok not eval { $list->contains(); };

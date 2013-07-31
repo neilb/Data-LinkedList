@@ -19,9 +19,9 @@ my $clone = $list->clone();
 
 # Clean up after also.
    unlink 'data.txt' if -e 'data.txt';
-   
+
 # To test that the file written was the same as the one
-# read we have to place the elements which we have been 
+# read we have to place the elements which we have been
 # written into the clone of the list (parentheses needed).
 ok join(' ', (($clone->to_array()) x 2)) eq join(' ', $list->to_array());
    $list->clear();

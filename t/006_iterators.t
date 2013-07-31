@@ -48,7 +48,7 @@ ok $iterator->next() eq 0;
    $iterator = undef;
 
 # Descending iterator. Need to test this after
-# to avoid any concurrent modifications.   
+# to avoid any concurrent modifications.
 my $desc_iterator = $list->descending_iterator();
 ok $desc_iterator->has_next();
 ok $desc_iterator->next() eq 5;

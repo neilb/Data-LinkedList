@@ -10,11 +10,11 @@ sub new {
         next     => undef,
         previous => undef
     };
-	
+
     while (my ($key, $value) = each %params) {
         $self->{$key} = $value if exists $self->{$key};
     }
-	
+
     return bless $self, $class;
 }
 

@@ -5,7 +5,7 @@
 use strict;
 use warnings;
 use Test::More tests => 23;
-use Data::LinkedList; 
+use Data::LinkedList;
 
 my $list = Data::LinkedList->new();
 my @collection = (1, 2, 3);
@@ -28,7 +28,7 @@ ok $list->get_last() eq 3;
 ok $list->remove_first() eq 1;
 ok $list->remove_last() eq 3;
    $list->clear();
-   
+
 # Adding collections to the list
    $list->add_all(@collection);
 ok $list->get_first() eq 1;
@@ -39,7 +39,7 @@ ok $list->get(3) eq 3;
 ok $list->get_first() eq 1;
 ok $list->get_last() eq 3;
    $list->clear();
-   
+
 # Setting the value of an existing entry
    $list->add('element');
 ok $list->set(0, 'replaced element') eq 'element';
@@ -53,7 +53,7 @@ ok $list->get_first() eq 1;
 ok $list->get(1) eq 2;
 ok $list->get_last() eq 3;
    $list->clear();
-   
+
 # Removing an element by its index
    $list->add_all(@collection);
 ok $list->remove_at(1) eq 2;
@@ -68,7 +68,7 @@ ok $list->remove_at(1) eq 2;
 ok $list->get(0) eq 1;
 ok $list->get(1) eq 3;
    $list->clear();
-   
+
 # Ensure poll() and poll_last() return undef if
 # the list is empty.
 ok not defined $list->poll();

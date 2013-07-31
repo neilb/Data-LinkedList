@@ -39,7 +39,7 @@ ok not eval { $list->remove_at(0); };
 ok not eval { $iterator->next(); };
 ok not eval {$desc_iterator->next() };
    $list->clear();
-# Iterator should be on position 0. next() and previous() should throw 
+# Iterator should be on position 0. next() and previous() should throw
 # no such element; the list is empty.
 ok $iterator->next_index() == 0;
 ok not eval { $iterator->next(); };

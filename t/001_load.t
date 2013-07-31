@@ -7,10 +7,10 @@ use warnings;
 use Test::More tests => 10;
 
 BEGIN {
-    use_ok 'Data::LinkedList'; 
-    use_ok 'Data::LinkedList::Entry'; 
-    use_ok 'Data::LinkedList::Iterator::ListIterator'; 
-    use_ok 'Data::LinkedList::Iterator::DescendingIterator'; 
+    use_ok 'Data::LinkedList';
+    use_ok 'Data::LinkedList::Entry';
+    use_ok 'Data::LinkedList::Iterator::ListIterator';
+    use_ok 'Data::LinkedList::Iterator::DescendingIterator';
 }
 
 my $list = Data::LinkedList->new();
