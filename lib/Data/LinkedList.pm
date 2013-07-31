@@ -76,7 +76,7 @@ sub __check_bounds_inclusive {
 
     if ($index < 0 or $index > $self->{size}) {
         croak(
-            'Index out of bounds: The index provided was out of range.
+            'Index out of bounds: The index provided was out of range. . "\n" .
              Index: ' . $index . ' Size :' . $self->{size}
         );
     }
