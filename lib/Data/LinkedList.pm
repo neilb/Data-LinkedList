@@ -156,6 +156,10 @@ sub remove_last {
 }
 
 sub add_first {
+    if (scalar @_ < 2) {
+        croak 'Expected two parameters, only got ' . scalar @_;
+    }
+
     my ($self, $element) = @_;
     my $entry = Data::LinkedList::Entry->new(data => $element);
 
@@ -178,6 +182,10 @@ sub add_last {
 }
 
 sub contains {
+    if (scalar @_ < 2) {
+        croak 'Expected two parameters, only got ' . scalar @_;
+    }
+
     my ($self, $element) = @_;
     my $entry = $self->{first};
 
@@ -203,6 +211,10 @@ sub add {
 }
 
 sub remove {
+    if (scalar @_ < 2) {
+        croak 'Expected two parameters, only got ' . scalar @_;
+    }
+
     my ($self, $element) = @_;
     my $entry = $self->{first};
 
@@ -219,11 +231,19 @@ sub remove {
 }
 
 sub add_all {
+    if (scalar @_ < 2) {
+        croak 'Expected at least two parameters, only got ' . scalar @_;
+    }
+
     my ($self, @array) = @_;
     return $self->add_all_at($self->{size}, @array);
 }
 
 sub add_all_at {
+    if (scalar @_ < 3) {
+        croak 'Expected at least three parameters, only got ' . scalar @_;
+    }
+
     my ($self, $index, @array) = @_;
     $self->__check_bounds_inclusive($index);
     my $size = scalar @array;
@@ -285,12 +305,20 @@ sub clear {
 }
 
 sub get {
+    if (scalar @_ < 2) {
+        croak 'Expected two parameters, only got ' . scalar @_;
+    }
+
     my ($self, $index) = @_;
     $self->__check_bounds_exclusive($index);
     return $self->__get_entry($index)->{data};
 }
 
 sub set {
+    if (scalar @_ < 3) {
+        croak 'Expected three parameters, only got ' . scalar @_;
+    }
+
     my ($self, $index, $element) = @_;
     $self->__check_bounds_exclusive($index);
     my $entry = $self->__get_entry($index);
@@ -300,6 +328,10 @@ sub set {
 }
 
 sub insert {
+    if (scalar @_ < 3) {
+        croak 'Expected three parameters, only got ' . scalar @_;
+    }
+
     my ($self, $index, $element) = @_;
     $self->__check_bounds_inclusive($index);
     my $entry = Data::LinkedList::Entry->new(data => $element);
@@ -325,6 +357,10 @@ sub insert {
 }
 
 sub remove_at {
+    if (scalar @_ < 2) {
+        croak 'Expected two parameters, only got ' . scalar @_;
+    }
+
     my ($self, $index) = @_;
     $self->__check_bounds_exclusive($index);
     my $entry = $self->__get_entry($index);
@@ -333,6 +369,10 @@ sub remove_at {
 }
 
 sub index_of {
+    if (scalar @_ < 2) {
+        croak 'Expected two parameters, only got ' . scalar @_;
+    }
+
     my ($self, $element) = @_;
     my ($index, $entry) = (0, $self->{first});
 
@@ -349,6 +389,10 @@ sub index_of {
 }
 
 sub last_index_of {
+    if (scalar @_ < 2) {
+        croak 'Expected two parameters, only got ' . scalar @_;
+    }
+
     my ($self, $element) = @_;
     my ($index, $entry) = (($self->{size} - 1), $self->{last});
 
@@ -365,7 +409,7 @@ sub last_index_of {
 }
 
 sub to_array {
-    my ($self) = shift;
+    my $self = shift;
     my ($entry, @array) = ($self->{first}, ());
 
     for (my $i = 0; ($i < $self->{size}); $i++) {
@@ -433,6 +477,10 @@ sub remove_first_occurrence {
 }
 
 sub remove_last_occurrence {
+    if (scalar @_ < 2) {
+        croak 'Expected two parameters, only got ' . scalar @_;
+    }
+
     my ($self, $element) = @_;
     my $entry = $self->{last};
 
@@ -453,10 +501,18 @@ sub clone {
 }
 
 sub write_object {
+    if (scalar @_ < 2) {
+        croak 'Expected two parameters, only got ' . scalar @_;
+    }
+
     Storable::store \shift, shift;
 }
 
 sub read_object {
+    if (scalar @_ < 2) {
+        croak 'Expected two parameters, only got ' . scalar @_;
+    }
+
     my ($self, $filename) = @_;
     my $entry = ${Storable::retrieve $filename, 1}->{first};
 
@@ -467,6 +523,10 @@ sub read_object {
 }
 
 sub list_iterator {
+    if (scalar @_ < 2) {
+        croak 'Expected two parameters, only got ' . scalar @_;
+    }
+
     my ($self, $index) = @_;
     $self->__check_bounds_inclusive($index);
 
