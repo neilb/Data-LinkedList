@@ -46,7 +46,7 @@ sub __remove_entry {
     if ($self->{size} == 0) {
         $self->{first} = $self->{last} = undef;
     } elsif ($entry == $self->{first}) {
-        $self->{first} = $entry->{next};        
+        $self->{first} = $entry->{next};
         $entry->{next}->{previous} = undef;
     } elsif ($entry == $self->{last}) {
         $self->{last} = $entry->{previous};
@@ -74,7 +74,7 @@ sub __add_last_entry {
 sub __check_bounds_inclusive {
     my ($self, $index) = @_;
 
-    if (($index < 0) || ($index > $self->{size})) {
+    if ($index < 0 or $index > $self->{size}) {
         croak(
             'Index out of bounds: The index provided was out of range.
              Index: ' . $index . ' Size :' . $self->{size}
@@ -85,7 +85,7 @@ sub __check_bounds_inclusive {
 sub __check_bounds_exclusive {
     my ($self, $index) = @_;
 
-    if (($index < 0) || ($index >= $self->{size})) {
+    if ($index < 0 or $index >= $self->{size}) {
         croak(
             'Index out of bounds: The index provided was out of range.' . "\n" .
             'Index: ' . $index . ' Size :' . $self->{size}
@@ -119,9 +119,9 @@ sub remove_first {
     if ($self->{size} == 0) {
         croak 'No such element in list.';
     } else {
+        my $removed = $self->{first}->{data};
         $self->{mod_count}++;
         $self->{size}--;
-        my ($removed) = $self->{first}->{data};
 
         if (defined $self->{first}->{next}) {
             $self->{first}->{next}->{previous} = undef;
@@ -140,9 +140,9 @@ sub remove_last {
     if ($self->{size} == 0) {
         croak 'No such element in list.';
     } else {
-        $self->{mod_count}++;
-        $self->{size}--;       
         my $removed = $self->{last}->{data};
+        $self->{mod_count}++;
+        $self->{size}--;
 
         if (defined $self->{last}->{previous}) {
             $self->{last}->{previous}->{next} = undef;
@@ -157,10 +157,7 @@ sub remove_last {
 
 sub add_first {
     my ($self, $element) = @_;
-    my $entry = Data::LinkedList::Entry->new(
-        data => $element
-    );
-    $self->{mod_count}++;
+    my $entry = Data::LinkedList::Entry->new(data => $element);   
 
     if ($self->{size} == 0) {
         $self->{first} = $self->{last} = $entry;
@@ -170,6 +167,7 @@ sub add_first {
         $self->{first} = $entry;
     }
 
+    $self->{mod_count}++;
     $self->{size}++;
 }
 
@@ -245,24 +243,20 @@ sub add_all_at {
         $before = $self->{last};
     }
 
-    my $entry = Data::LinkedList::Entry->new(
-        data => $iterator->value()
-    );
-    $entry->{previous} = $before;
+    my $entry = Data::LinkedList::Entry->new(data => $iterator->value());
     my ($previous, $first_new) = ($entry, $entry);
+    $entry->{previous} = $before;
 
     for (my $position = 1; ($position < $size); $position++) {
-        $entry = Data::LinkedList::Entry->new(
-            data => $iterator->value()
-        );
+        $entry = Data::LinkedList::Entry->new(data => $iterator->value());
         $entry->{previous} = $previous;
         $previous->{next} = $entry;
         $previous = $entry;
     }
 
+    $previous->{next} = $after;
     $self->{mod_count}++;
     $self->{size} += $size;
-    $previous->{next} = $after;
 
     if (defined $after) {
         $after->{previous} = $entry;
@@ -283,9 +277,9 @@ sub clear {
     my $self = shift;
 
     if ($self->{size} > 0) {
-        $self->{mod_count}++;
         $self->{first} = undef;
         $self->{last} = undef;
+        $self->{mod_count}++;
         $self->{size} = 0;
     }
 }
@@ -298,11 +292,10 @@ sub get {
 
 sub set {
     my ($self, $index, $element) = @_;
-    $self->__check_bounds_exclusive($index);
+    $self->__check_bounds_exclusive($index);   
     my $entry = $self->__get_entry($index);
     my $old = $entry->{data};
     $entry->{data} = $element;
-
     return $old;
 }
 
@@ -312,10 +305,10 @@ sub insert {
     my $entry = Data::LinkedList::Entry->new(data => $element);
 
     if ($index < $self->{size}) {
-        $self->{mod_count}++;
         my $after = $self->__get_entry($index);
         $entry->{next} = $after;
         $entry->{previous} = $after->{previous};
+        $self->{mod_count}++;
 
         if (not defined $after->{previous}) {
             $self->{first} = $entry;
@@ -336,7 +329,6 @@ sub remove_at {
     $self->__check_bounds_exclusive($index);
     my $entry = $self->__get_entry($index);
     $self->__remove_entry($entry);
-
     return $entry->{data};
 }
 
