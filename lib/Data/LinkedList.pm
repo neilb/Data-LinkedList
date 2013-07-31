@@ -3,8 +3,8 @@ package Data::LinkedList;
 use strict;
 use warnings;
 use Carp;
-use Iterator::Util;
 use Storable;
+use Iterator::Util;
 use Data::LinkedList::Entry;
 use Data::LinkedList::Iterator::ListIterator;
 use Data::LinkedList::Iterator::DescendingIterator;
@@ -16,15 +16,12 @@ our @EXPORT = qw();
 our $VERSION = '0.1';
 
 sub new {
-    my ($class, %params) = @_;
-    my ($self) = {
+    return bless {
         first     => undef,
         last      => undef,
         size      => 0,
         mod_count => 0,
-    };
-
-    return bless $self, $class;
+    }, shift;
 }
 
 sub __get_entry {
@@ -91,7 +88,7 @@ sub __check_bounds_exclusive {
     if (($index < 0) || ($index >= $self->{size})) {
         croak(
             'Index out of bounds: The index provided was out of range.' . "\n" .
-            'Index: ' . $index . ' Size :' . $self->{size};
+            'Index: ' . $index . ' Size :' . $self->{size}
         );
     }
 }
