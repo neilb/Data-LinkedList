@@ -8,7 +8,7 @@ use Data::LinkedList::Entry;
 
 sub new {
     my ($class, %params) = @_;
-    my ($self) = {
+    my $self = {
         known_mod     => undef,
         next          => undef,
         previous      => undef,
@@ -29,7 +29,7 @@ sub new {
 }
 
 sub __check_mod {
-    my ($self) = shift;
+    my $self = shift;
     
     if ($self->{known_mod} != $self->{list}->{mod_count}) {
         croak (
@@ -43,7 +43,7 @@ sub has_next {
 }
 
 sub next {
-    my ($self) = shift;
+    my $self = shift;
     $self->__check_mod();
     
     if (not defined $self->{next}) {
@@ -58,7 +58,7 @@ sub next {
 }
 
 sub remove {
-    my ($self) = shift;
+    my $self = shift;
     $self->__check_mod();
     
     if (not defined $self->{last_returned}) {

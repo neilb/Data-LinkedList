@@ -5,7 +5,7 @@ use warnings;
 
 sub new {
     my ($class, %params) = @_;
-    my ($self) = {
+    my $self = {
         data     => undef,
         next     => undef,
         previous => undef

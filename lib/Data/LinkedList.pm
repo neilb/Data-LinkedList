@@ -94,7 +94,7 @@ sub __check_bounds_exclusive {
 }
 
 sub get_first {
-    my ($self) = shift;
+    my $self = shift;
 
     if ($self->{size} == 0) {
         croak 'No such element in list.';
@@ -104,7 +104,7 @@ sub get_first {
 }
 
 sub get_last {
-    my ($self) = shift;
+    my $self = shift;
 
     if ($self->{size} == 0) {
         croak 'No such element in list.';
@@ -114,7 +114,7 @@ sub get_last {
 }
 
 sub remove_first {
-    my ($self) = shift;
+    my $self = shift;
 
     if ($self->{size} == 0) {
         croak 'No such element in list.';
@@ -135,14 +135,14 @@ sub remove_first {
 }
 
 sub remove_last {
-    my ($self) = shift;
+    my $self = shift;
 
     if ($self->{size} == 0) {
         croak 'No such element in list.';
     } else {
         $self->{mod_count}++;
-        $self->{size}--;
-        my ($removed) = $self->{last}->{data};
+        $self->{size}--;       
+        my $removed = $self->{last}->{data};
 
         if (defined $self->{last}->{previous}) {
             $self->{last}->{previous}->{next} = undef;
@@ -157,7 +157,7 @@ sub remove_last {
 
 sub add_first {
     my ($self, $element) = @_;
-    my ($entry) = Data::LinkedList::Entry->new(
+    my $entry = Data::LinkedList::Entry->new(
         data => $element
     );
     $self->{mod_count}++;
@@ -181,7 +181,7 @@ sub add_last {
 
 sub contains {
     my ($self, $element) = @_;
-    my ($entry) = $self->{first};
+    my $entry = $self->{first};
 
     while (defined $entry) {
         if ($element eq $entry->{data}) {
@@ -206,7 +206,7 @@ sub add {
 
 sub remove {
     my ($self, $element) = @_;
-    my ($entry) = $self->{first};
+    my $entry = $self->{first};
 
     while (defined $entry) {
         if ($element eq $entry->{data}) {
@@ -228,7 +228,7 @@ sub add_all {
 sub add_all_at {
     my ($self, $index, @array) = @_;
     $self->__check_bounds_inclusive($index);
-    my ($size) = scalar @array;
+    my $size = scalar @array;
 
     if ($size == 0) {
         return 0;
@@ -245,7 +245,7 @@ sub add_all_at {
         $before = $self->{last};
     }
 
-    my ($entry) = Data::LinkedList::Entry->new(
+    my $entry = Data::LinkedList::Entry->new(
         data => $iterator->value()
     );
     $entry->{previous} = $before;
@@ -280,7 +280,7 @@ sub add_all_at {
 }
 
 sub clear {
-    my ($self) = shift;
+    my $self = shift;
 
     if ($self->{size} > 0) {
         $self->{mod_count}++;
@@ -299,8 +299,8 @@ sub get {
 sub set {
     my ($self, $index, $element) = @_;
     $self->__check_bounds_exclusive($index);
-    my ($entry) = $self->__get_entry($index);
-    my ($old) = $entry->{data};
+    my $entry = $self->__get_entry($index);
+    my $old = $entry->{data};
     $entry->{data} = $element;
 
     return $old;
@@ -309,11 +309,11 @@ sub set {
 sub insert {
     my ($self, $index, $element) = @_;
     $self->__check_bounds_inclusive($index);
-    my ($entry) = Data::LinkedList::Entry->new(data => $element);
+    my $entry = Data::LinkedList::Entry->new(data => $element);
 
     if ($index < $self->{size}) {
         $self->{mod_count}++;
-        my ($after) = $self->__get_entry($index);
+        my $after = $self->__get_entry($index);
         $entry->{next} = $after;
         $entry->{previous} = $after->{previous};
 
@@ -334,7 +334,7 @@ sub insert {
 sub remove_at {
     my ($self, $index) = @_;
     $self->__check_bounds_exclusive($index);
-    my ($entry) = $self->__get_entry($index);
+    my $entry = $self->__get_entry($index);
     $self->__remove_entry($entry);
 
     return $entry->{data};
@@ -342,8 +342,7 @@ sub remove_at {
 
 sub index_of {
     my ($self, $element) = @_;
-    my ($index) = 0;
-    my ($entry) = $self->{first};
+    my ($index, $entry) = (0, $self->{first});
 
     while (defined $entry) {
         if ($element eq $entry->{data}) {
@@ -359,8 +358,7 @@ sub index_of {
 
 sub last_index_of {
     my ($self, $element) = @_;
-    my ($index) = ($self->{size} - 1);
-    my ($entry) = $self->{last};
+    my ($index, $entry) = (($self->{size} - 1), $self->{last});
 
     while (defined $entry) {
         if ($element eq $entry->{data}) {
@@ -395,13 +393,13 @@ sub element {
 }
 
 sub peek {
-    my ($self) = shift;
-    ($self->{size} == 0) ? return undef : return $self->get_first();
+    my $self = shift;
+    $self->{size} == 0 ? return undef : return $self->get_first();
 }
 
 sub poll {
-    my ($self) = shift;
-    ($self->{size} == 0) ? return undef : return $self->remove_first();
+    my $self = shift;
+    $self->{size} == 0 ? return undef : return $self->remove_first();
 }
 
 sub offer_first {
@@ -417,8 +415,8 @@ sub peek_first {
 }
 
 sub peek_last {
-    my ($self) = shift;
-    ($self->{size} == 0) ? return undef : return $self->get_last();
+    my $self = shift;
+    $self->{size} == 0 ? return undef : return $self->get_last();
 }
 
 sub poll_first {
@@ -426,8 +424,8 @@ sub poll_first {
 }
 
 sub poll_last {
-    my ($self) = shift;
-    ($self->{size} == 0) ? return undef : return $self->remove_last();
+    my $self = shift;
+    $self->{size} == 0 ? return undef : return $self->remove_last();
 }
 
 sub pop {
@@ -444,7 +442,7 @@ sub remove_first_occurrence {
 
 sub remove_last_occurrence {
     my ($self, $element) = @_;
-    my ($entry) = $self->{last};
+    my $entry = $self->{last};
 
     while (defined $entry) {
         if ($element eq $entry->{data}) {
@@ -468,7 +466,7 @@ sub write_object {
 
 sub read_object {
     my ($self, $filename) = @_;
-    my ($entry) = ${Storable::retrieve $filename, 1}->{first};
+    my $entry = ${Storable::retrieve $filename, 1}->{first};
 
     while (defined $entry) {
         $self->__add_last_entry($entry);
