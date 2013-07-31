@@ -157,7 +157,7 @@ sub remove_last {
 
 sub add_first {
     my ($self, $element) = @_;
-    my $entry = Data::LinkedList::Entry->new(data => $element);   
+    my $entry = Data::LinkedList::Entry->new(data => $element);
 
     if ($self->{size} == 0) {
         $self->{first} = $self->{last} = $entry;
@@ -292,7 +292,7 @@ sub get {
 
 sub set {
     my ($self, $index, $element) = @_;
-    $self->__check_bounds_exclusive($index);   
+    $self->__check_bounds_exclusive($index);
     my $entry = $self->__get_entry($index);
     my $old = $entry->{data};
     $entry->{data} = $element;
