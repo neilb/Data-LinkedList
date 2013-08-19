@@ -3,6 +3,8 @@ package Data::LinkedList::Entry;
 use strict;
 use warnings;
 
+our $VERSION = '0.1';
+
 sub new {
     my ($class, %params) = @_;
     my $self = {

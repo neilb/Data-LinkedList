@@ -6,6 +6,8 @@ use Carp;
 use Data::LinkedList;
 use Data::LinkedList::Entry;
 
+our $VERSION = '0.1';
+
 sub new {
     my ($class, %params) = @_;
     my $self = {
