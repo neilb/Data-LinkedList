@@ -113,11 +113,8 @@ sub remove {
 }
 
 sub add {
-    if (scalar @_ < 2) {
-        croak 'Expected two parameters, only got ' . scalar @_;
-    }
-
     my ($self, $element) = @_;
+    $self->{list}->__check_parameter_count(2, scalar @_);
     $self->__check_mod();
     $self->{list}->{mod_count}++;
     $self->{known_mod}++;
@@ -145,11 +142,8 @@ sub add {
 }
 
 sub set {
-    if (scalar @_ < 2) {
-        croak 'Expected two parameters, only got ' . scalar @_;
-    }
-
     my ($self, $element) = @_;
+    $self->{list}->__check_parameter_count(2, scalar @_);
     $self->__check_mod();
 
     if (not defined $self->{last_returned}) {

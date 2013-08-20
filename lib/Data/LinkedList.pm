@@ -93,6 +93,16 @@ sub __check_bounds_exclusive {
     }
 }
 
+sub __check_parameter_count {
+    my ($self, $expected, $actual) = @_;
+    
+    if ($actual < $expected) {
+        croak (
+            'Expected ' . $expected . ' parameters, got ' . $actual
+        );
+    }
+}
+
 sub get_first {
     my $self = shift;
 
@@ -156,11 +166,8 @@ sub remove_last {
 }
 
 sub add_first {
-    if (scalar @_ < 2) {
-        croak 'Expected two parameters, only got ' . scalar @_;
-    }
-
     my ($self, $element) = @_;
+    $self->__check_parameter_count(2, scalar @_);
     my $entry = Data::LinkedList::Entry->new(data => $element);
 
     if ($self->{size} == 0) {
@@ -182,11 +189,8 @@ sub add_last {
 }
 
 sub contains {
-    if (scalar @_ < 2) {
-        croak 'Expected two parameters, only got ' . scalar @_;
-    }
-
     my ($self, $element) = @_;
+    $self->__check_parameter_count(2, scalar @_);
     my $entry = $self->{first};
 
     while (defined $entry) {
@@ -211,11 +215,8 @@ sub add {
 }
 
 sub remove {
-    if (scalar @_ < 2) {
-        croak 'Expected two parameters, only got ' . scalar @_;
-    }
-
     my ($self, $element) = @_;
+    $self->__check_parameter_count(2, scalar @_);
     my $entry = $self->{first};
 
     while (defined $entry) {
@@ -231,20 +232,14 @@ sub remove {
 }
 
 sub add_all {
-    if (scalar @_ < 2) {
-        croak 'Expected at least two parameters, only got ' . scalar @_;
-    }
-
     my ($self, @array) = @_;
+    $self->__check_parameter_count(2, scalar @_);
     return $self->add_all_at($self->{size}, @array);
 }
 
 sub add_all_at {
-    if (scalar @_ < 3) {
-        croak 'Expected at least three parameters, only got ' . scalar @_;
-    }
-
     my ($self, $index, @array) = @_;
+    $self->__check_parameter_count(3, scalar @_);
     $self->__check_bounds_inclusive($index);
     my $size = scalar @array;
 
@@ -305,21 +300,15 @@ sub clear {
 }
 
 sub get {
-    if (scalar @_ < 2) {
-        croak 'Expected two parameters, only got ' . scalar @_;
-    }
-
     my ($self, $index) = @_;
+    $self->__check_parameter_count(2, scalar @_);
     $self->__check_bounds_exclusive($index);
     return $self->__get_entry($index)->{data};
 }
 
 sub set {
-    if (scalar @_ < 3) {
-        croak 'Expected three parameters, only got ' . scalar @_;
-    }
-
     my ($self, $index, $element) = @_;
+    $self->__check_parameter_count(3, scalar @_);
     $self->__check_bounds_exclusive($index);
     my $entry = $self->__get_entry($index);
     my $old = $entry->{data};
@@ -328,11 +317,8 @@ sub set {
 }
 
 sub insert {
-    if (scalar @_ < 3) {
-        croak 'Expected three parameters, only got ' . scalar @_;
-    }
-
     my ($self, $index, $element) = @_;
+    $self->__check_parameter_count(3, scalar @_);
     $self->__check_bounds_inclusive($index);
     my $entry = Data::LinkedList::Entry->new(data => $element);
 
@@ -357,11 +343,8 @@ sub insert {
 }
 
 sub remove_at {
-    if (scalar @_ < 2) {
-        croak 'Expected two parameters, only got ' . scalar @_;
-    }
-
     my ($self, $index) = @_;
+    $self->__check_parameter_count(2, scalar @_);
     $self->__check_bounds_exclusive($index);
     my $entry = $self->__get_entry($index);
     $self->__remove_entry($entry);
@@ -369,11 +352,8 @@ sub remove_at {
 }
 
 sub index_of {
-    if (scalar @_ < 2) {
-        croak 'Expected two parameters, only got ' . scalar @_;
-    }
-
     my ($self, $element) = @_;
+    $self->__check_parameter_count(2, scalar @_);
     my ($index, $entry) = (0, $self->{first});
 
     while (defined $entry) {
@@ -389,11 +369,8 @@ sub index_of {
 }
 
 sub last_index_of {
-    if (scalar @_ < 2) {
-        croak 'Expected two parameters, only got ' . scalar @_;
-    }
-
     my ($self, $element) = @_;
+    $self->__check_parameter_count(2, scalar @_);
     my ($index, $entry) = (($self->{size} - 1), $self->{last});
 
     while (defined $entry) {
@@ -477,11 +454,8 @@ sub remove_first_occurrence {
 }
 
 sub remove_last_occurrence {
-    if (scalar @_ < 2) {
-        croak 'Expected two parameters, only got ' . scalar @_;
-    }
-
     my ($self, $element) = @_;
+    $self->__check_parameter_count(2, scalar @_);
     my $entry = $self->{last};
 
     while (defined $entry) {
@@ -501,19 +475,14 @@ sub clone {
 }
 
 sub write_object {
-    if (scalar @_ < 2) {
-        croak 'Expected two parameters, only got ' . scalar @_;
-    }
-
-    Storable::store \shift, shift;
+    my ($self, $filename) = @_;
+    $self->__check_parameter_count(2, scalar @_);
+    Storable::store \$self, $filename;
 }
 
 sub read_object {
-    if (scalar @_ < 2) {
-        croak 'Expected two parameters, only got ' . scalar @_;
-    }
-
     my ($self, $filename) = @_;
+    $self->__check_parameter_count(2, scalar @_);
     my $entry = ${Storable::retrieve $filename, 1}->{first};
 
     while (defined $entry) {
@@ -523,11 +492,8 @@ sub read_object {
 }
 
 sub list_iterator {
-    if (scalar @_ < 2) {
-        croak 'Expected two parameters, only got ' . scalar @_;
-    }
-
     my ($self, $index) = @_;
+    $self->__check_parameter_count(2, scalar @_);
     $self->__check_bounds_inclusive($index);
 
     return Data::LinkedList::Iterator::ListIterator->new(
