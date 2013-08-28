@@ -26,7 +26,6 @@ sub new {
     $self->{known_mod} = $self->{list}->{mod_count};
     $self->{next} = $self->{list}->{last};
     $self->{position} = ($self->{list}->{size} - 1);
-
     return bless $self, $class;
 }
 
@@ -55,7 +54,6 @@ sub next {
     --$self->{position};
     $self->{last_returned} = $self->{next};
     $self->{next} = $self->{last_returned}->{previous};
-
     return $self->{last_returned}->{data};
 }
 
@@ -77,3 +75,41 @@ sub remove {
 1;
 
 __END__
+
+=head1 NAME
+
+Data::LinkedList::Iterator::ListIterator - A list iterator to iterate over the 
+linked list in reverse order.
+
+=head1 DESCRIPTION
+
+This object keeps track of its position in the linked list as well as the next and previous
+entry for the current entry.
+
+=head1 METHODS
+
+=head3 new
+
+Instantiates and returns a new Data::LinkedList::Iterator::ListIterator object. The starting
+index for the iterator is that of the last element in the list.
+
+=head3 has_next
+
+Returns a boolean value to represent if there is a next entry in the list.
+
+=head3 next
+
+Returns the next entry in the list.
+
+=head3 remove
+
+Remove the most recently returned element from the list.
+
+=head1 COPYRIGHT
+
+Copyright (c) 2013 Lloyd Griffiths
+
+This program is free software; you can redistribute
+it and/or modify it under the same terms as Perl itself.
+
+=cut
