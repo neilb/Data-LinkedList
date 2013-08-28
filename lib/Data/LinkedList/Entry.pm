@@ -48,3 +48,12 @@ Each C< Entry > object has three properties:
 
 Instantiates and returns a new Data::LinkedList::Entry object. Doesn't require
 any parameters - the properties of the object can be set after instantiation.
+
+=head1 COPYRIGHT
+
+Copyright (c) 2013 Lloyd Griffiths
+
+This program is free software; you can redistribute
+it and/or modify it under the same terms as Perl itself.
+
+=cut
