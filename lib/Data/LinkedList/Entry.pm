@@ -23,3 +23,28 @@ sub new {
 1;
 
 __END__
+
+=head1 NAME
+
+Data::LinkedList::Entry - Object to represent an entry in the list.
+
+=head1 DESCRIPTION
+
+Each C< Entry > object has three properties:
+
+=over 
+
+=item C< data > The entry data. This can be anything from an integer to an array.
+
+=item C< next > The next entry in the list.
+
+=item C< previous > The previous entry in the list.
+
+=back
+
+=head1 METHODS
+
+=head3 new
+
+Instantiates and returns a new Data::LinkedList::Entry object. Doesn't require
+any parameters - the properties of the object can be set after instantiation.
