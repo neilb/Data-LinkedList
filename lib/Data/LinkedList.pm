@@ -495,7 +495,6 @@ sub list_iterator {
     my ($self, $index) = @_;
     $self->__check_parameter_count(2, scalar @_);
     $self->__check_bounds_inclusive($index);
-
     return Data::LinkedList::Iterator::ListIterator->new(
         index => $index,
         list  => $self
