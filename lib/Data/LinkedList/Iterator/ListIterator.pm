@@ -158,3 +158,64 @@ sub set {
 1;
 
 __END__
+
+=head1 NAME
+
+Data::LinkedList::Iterator::ListIterator - A list iterator to iterate over the linked list.
+
+=head1 DESCRIPTION
+
+This object keeps track of its position in the linked list as well as the next and previous
+entry for the current entry.
+
+=head1 METHODS
+
+=head3 new
+
+Instantiates and returns a new Data::LinkedList::Iterator::ListIterator object. The starting
+index for the iterator has to be passed to the object upon construction.
+
+=head3 next_index
+
+Returns the position of the next entry.
+
+=head3 previous_index
+
+Returns the position of the previous entry.
+
+=head3 has_next
+
+Returns a boolean value to represent if there is a next entry in the list.
+
+=head3 has_previous
+
+Returns a boolean value to represent if there is a previous entry in the list.
+
+=head3 next
+
+Returns the next entry in the list.
+
+=head3 previous
+
+Returns the previous entry in the list.
+
+=head3 remove
+
+Remove the most recently returned element from the list.
+
+=head3 add
+
+Add an entry between the previous and next element and advance to the next element.
+
+=head3 set
+
+Change the entry data of the most recently returned entry.
+
+=head1 COPYRIGHT
+
+Copyright (c) 2013 Lloyd Griffiths
+
+This program is free software; you can redistribute
+it and/or modify it under the same terms as Perl itself.
+
+=cut
