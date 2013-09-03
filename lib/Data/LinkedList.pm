@@ -510,3 +510,29 @@ sub descending_iterator {
 1;
 
 __END__
+
+=head1 NAME
+
+Data::LinkedList - Perl implementation of the GNU Classpath LinkedList.
+
+=head1 DESCRIPTION
+
+This module provides a doubly linked list data structure, as well as 
+iterators to walk through the list.
+
+=head1 BUGS
+
+Please report any bugs or feature requests to lloydg@cpan.org
+
+=head1 AUTHOR
+
+Lloyd Griffiths
+
+=head1 COPYRIGHT
+
+Copyright (c) 2013 Lloyd Griffiths
+
+This program is free software; you can redistribute
+it and/or modify it under the same terms as Perl itself.
+
+=cut
