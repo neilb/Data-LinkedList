@@ -520,6 +520,88 @@ Data::LinkedList - Perl implementation of the GNU Classpath LinkedList.
 This module provides a doubly linked list data structure, as well as 
 iterators to walk through the list.
 
+=head1 METHODS
+
+=head3 new
+
+=head3 get_first
+
+=head3 get_last
+
+=head3 remove_first
+
+=head3 remove_last
+
+=head3 add_first
+
+=head3 add_last
+
+=head3 contains
+
+=head3 size
+
+=head3 add
+
+=head3 remove
+
+=head3 add_all
+
+=head3 add_all_at
+
+=head3 clear
+
+=head3 get
+
+=head3 set
+
+=head3 insert
+
+=head3 remove_at
+
+=head3 index_of
+
+=head3 last_index_of
+
+=head3 to_array
+
+=head3 offer
+
+=head3 element
+
+=head3 peek
+
+=head3 poll
+
+=head3 offer_first
+
+=head3 offer_last
+
+=head3 peek_first
+
+=head3 peek_last
+
+=head3 poll_first
+
+=head3 poll_last
+
+=head3 pop
+
+=head3 push
+
+=head3 remove_first_occurrence
+
+=head3 remove_last_occurrence
+
+=head3 clone
+
+=head3 write_object
+
+=head3 read_object
+
+=head3 list_iterator
+
+=head3 descending_iterator
+
 =head1 BUGS
 
 Please report any bugs or feature requests to lloydg@cpan.org
