@@ -523,125 +523,165 @@ iterators to walk through the list.
 =head1 METHODS
 
 =head3 new
+
 Create an instance of an empty doubly linked list.
 
 =head3 get_first
+
 Return the first element in the list.
 
 =head3 get_last
+
 Return the last element in the list.
 
 =head3 remove_first
+
 Remove and return the first element in the list.
 
 =head3 remove_last
+
 Remove and return the last element in the list.
 
 =head3 add_first
+
 Insert an element at the front of the list.
 
 =head3 add_last
+
 Insert an element at the end of the list.
 
 =head3 contains
+
 Return true if the list contains the given value.
 
 =head3 size
+
 Return the current size of the list.
 
 =head3 add
+
 Adds an element to the end of the list.
 
 =head3 remove
+
 Removes and returns the first element of the list.
 
 =head3 add_all
+
 Append a list of elements to the end of the list.
 
 =head3 add_all_at
+
 Add a list of elements at the given position of the list.
 
 =head3 clear
+
 Remove all elements from the list.
 
 =head3 get
+
 Return the element which is at the given index.
 
 =head3 set
+
 Replace the element at the given index of the list.
 
 =head3 insert
+
 Inserts an element into the given position of the list.
 
 =head3 remove_at
+
 Remove an element from the given position.
 
 =head3 index_of
+
 Returns the first index of the given element.
 
 =head3 last_index_of
+
 Returns the last index of the given element.
 
 =head3 to_array
+
 Returns an array which contains the elements of the list in order.
 
 =head3 offer
+
 Add an element to the end of the list.
 
 =head3 element
+
 Returns the first element in the list without removing it.
 
 =head3 peek
+
 Returns the first element in the list without removing it.
 
 =head3 poll
+
 Removes and returns the first element of the list.
 
 =head3 offer_first
+
 Inserts an element at the front of the list.
 
 =head3 offer_last
+
 Inserts an element at the end of the list.
 
 =head3 peek_first
+
 Returns the first element of the list without removing it.
 
 =head3 peek_last
+
 Returns the last element of the list without removing it.
 
 =head3 poll_first
+
 Removes and returns the first element of the list.
 
 =head3 poll_last
+
 Removes and returns the last element of the list.
 
 =head3 pop
+
 Pops an element from the stack by removing and returning
 the first element in the list. Equivalent to remove_first.
 
 =head3 push
+
 Pushes an element on to the stack by adding it to the front
 of the list. Equivalent to add_first.
 
 =head3 remove_first_occurrence
+
 Removes the first occurrence of the specified element.
 
 =head3 remove_last_occurrence
+
 Removes the last occurrence of the specified element.
 
 =head3 clone
+
 Create a copy of the linked list.
 
 =head3 write_object
+
 Serializes this object to the given file name.
 
 =head3 read_object
+
 Deserializes this object from the given file name.
 
 =head3 list_iterator
+
 Obtain a list iterator over this list, starting at a given index.
 
 =head3 descending_iterator
+
 Obtain an Iterator over this list in reverse sequential order.
 
 =head1 BUGS
