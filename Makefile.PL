@@ -12,8 +12,9 @@ WriteMakefile(
         },
     },
     PREREQ_PM    => {
-        'Test::Simple'   => 0.44,
-        'Storable'       => 2.34,
-        'Iterator::Util' => 0.02,
+        'Test::Simple'    => 0.44,
+        'Test::Exception' => 0.31,
+        'Storable'        => 2.34,
+        'Iterator::Util'  => 0.02,
     },
 );
