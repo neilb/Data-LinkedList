@@ -75,10 +75,10 @@ sub __check_bounds_inclusive {
     my ($self, $index) = @_;
 
     if ($index < 0 or $index > $self->{size}) {
-        croak(
-            'Index out of bounds: The index provided was out of range. . "\n" .
-             Index: ' . $index . ' Size :' . $self->{size}
-        );
+        croak(qq(
+            Index out of bounds: The index provided was out of range.
+            Index: $index Size : $self->{size}
+        ));
     }
 }
 
@@ -86,10 +86,10 @@ sub __check_bounds_exclusive {
     my ($self, $index) = @_;
 
     if ($index < 0 or $index >= $self->{size}) {
-        croak(
-            'Index out of bounds: The index provided was out of range.' . "\n" .
-            'Index: ' . $index . ' Size :' . $self->{size}
-        );
+        croak(qq(
+            Index out of bounds: The index provided was out of range.
+            Index: $index Size : $self->{size}
+        ));
     }
 }
 
@@ -97,9 +97,9 @@ sub __check_parameter_count {
     my ($self, $expected, $actual) = @_;
     
     if ($actual < $expected) {
-        croak (
-            'Expected ' . $expected . ' parameters, got ' . $actual
-        );
+        croak (qq(
+            Expected $expected parameters but got $actual
+        ));
     }
 }
 

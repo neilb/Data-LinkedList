@@ -33,9 +33,9 @@ sub __check_mod {
     my $self = shift;
 
     if ($self->{known_mod} != $self->{list}->{mod_count}) {
-        croak (
-            'Concurrent modification. Object modified whilst not in a permissible state.'
-        );
+        croak (qq(
+            Concurrent modification. Object modified whilst not in a permissible state.
+        ));
     }
 }
 
