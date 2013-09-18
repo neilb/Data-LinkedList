@@ -77,7 +77,7 @@ sub __check_bounds_inclusive {
     if ($index < 0 or $index > $self->{size}) {
         croak(qq(
             Index out of bounds: The index provided was out of range.
-            Index: $index Size : $self->{size}
+            Index: $index Size: $self->{size}
         ));
     }
 }
@@ -88,7 +88,7 @@ sub __check_bounds_exclusive {
     if ($index < 0 or $index >= $self->{size}) {
         croak(qq(
             Index out of bounds: The index provided was out of range.
-            Index: $index Size : $self->{size}
+            Index: $index Size: $self->{size}
         ));
     }
 }
