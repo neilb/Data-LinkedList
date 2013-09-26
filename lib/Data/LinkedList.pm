@@ -688,6 +688,12 @@ Obtain an Iterator over this list in reverse sequential order.
 
 Please report any bugs or feature requests to lloydg@cpan.org
 
+=head1 CREDITS
+
+Credits go to the authors of the GNU classpath implementation of 
+java.util.LinkedList class. The majority of this modules code has 
+been based on their prior work.
+
 =head1 AUTHOR
 
 Lloyd Griffiths
