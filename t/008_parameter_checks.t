@@ -12,7 +12,7 @@ use Data::LinkedList::Iterator::ListIterator;
 my $list = Data::LinkedList->new();
 
 # All of these subroutines expect at least 2
-# parameters (the object always being first).
+# parameters (the invocant always being first).
 dies_ok sub { $list->add_first(); };
 dies_ok sub { $list->contains(); };
 dies_ok sub { $list->remove(); };
