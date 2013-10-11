@@ -41,7 +41,7 @@ sub __check_mod {
     my $self = shift;
 
     if ($self->{known_mod} != $self->{list}->{mod_count}) {
-        croak (qq(
+        croak(qq(
             Concurrent modification. Object modified whilst not in a permissible state.
         ));
     }
@@ -147,7 +147,7 @@ sub set {
     $self->__check_mod();
 
     if (not defined $self->{last_returned}) {
-        croak (
+        croak(
             'Illegal state. The subroutine has been invokved at an  inappropriate time.'
         );
     } else {

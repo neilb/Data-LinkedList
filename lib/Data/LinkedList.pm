@@ -94,7 +94,7 @@ sub __check_parameter_count {
     my ($self, $expected, $actual) = @_;
     
     if ($actual < $expected) {
-        croak (qq(
+        croak(qq(
             Expected $expected parameters but got $actual
         ));
     }
