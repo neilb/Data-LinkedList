@@ -4,7 +4,7 @@
 
 use strict;
 use warnings;
-use Test::More tests => 10;
+use Test::More tests => 11;
 
 BEGIN {
     use_ok 'Data::LinkedList';
@@ -23,3 +23,4 @@ isa_ok $list->descending_iterator(), 'Data::LinkedList::Iterator::DescendingIter
 
 ok $list->size() == 0;
 ok $list->list_iterator(0)->next_index() == 0;
+ok $list->descending_iterator()->{position} == ($list->size() - 1)
