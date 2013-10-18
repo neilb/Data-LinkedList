@@ -24,6 +24,9 @@ sub new {
 sub __get_entry {
     my ($self, $number, $entry) = (shift, shift, undef);
 
+    # We can work out if we should traverse the list
+    # from the beginning or end depending on the
+    # position of the element
     if ($number < ($self->{size} / 2)) {
         $entry = $self->{first};
         $entry = $entry->{next} while $number-- > 0;
@@ -512,6 +515,38 @@ __END__
 
 Data::LinkedList - Perl implementation of the GNU Classpath LinkedList.
 
+=head1 SYNOPSIS
+
+    #!/usr/bin/env perl -w
+        
+    use strict;
+    use Data::LinkedList;
+        
+    my $list = Data::LinkedList->new();
+
+    $list->add({ name => 'Lloyd', age => undef });
+    $list->add({ name => 'Gary', age => undef });
+
+    CORE::say $list->get_first()->{name}; # Lloyd
+    CORE::say $list->get_last()->{name};  # Gary
+
+    $list->add_first({ name => 'Lisa', age => undef });
+    $list->add_last({ name => 'Bob', age => undef });
+
+    my $lisa = $list->remove_first(); # HashRef stored in $lisa
+    my $bob  = $list->remove_last();  # HashRef stored in $bob
+
+    CORE::say $list->size(); # 2
+
+    $list->add_all_at(1, ($lisa, $bob));
+
+    CORE::say $_->{name} for $list->to_array(); # Lloyd, Lisa, Bob, Gary
+
+    $list->set(1, "simple element");
+    CORE::say $list->get(1); # "simple element"
+
+    $list->write_object("list.txt");
+
 =head1 DESCRIPTION
 
 This module provides a doubly linked list data structure, as well as 
@@ -663,27 +698,27 @@ Removes the last occurrence of the specified element.
 
 =head3 clone
 
-Create a copy of the linked list.
+Create a deep close of the linked list.
 
 =head3 write_object
 
-Serializes this object to the given file name.
+Serializes the object and writes it to the given file name.
 
 =head3 read_object
 
-Deserializes this object from the given file name.
+Deserializes the object which is read from the given file name.
 
 =head3 list_iterator
 
-Obtain a list iterator over this list, starting at a given index.
+Obtain a list iterator for list that starts at a given index.
 
 =head3 descending_iterator
 
-Obtain an Iterator over this list in reverse sequential order.
+Obtain an Iterator for this list that traverses in reverse sequential order.
 
 =head1 BUGS
 
-Please report any bugs or feature requests to lloydg@cpan.org
+Please report any bugs to lloydg@cpan.org
 
 =head1 CREDITS
 
