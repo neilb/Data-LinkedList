@@ -698,7 +698,7 @@ Removes the last occurrence of the specified element.
 
 =head3 clone
 
-Create a deep close of the linked list.
+Create a deep clone of the linked list.
 
 =head3 write_object
 
