@@ -6,7 +6,7 @@ use Carp;
 use Data::LinkedList;
 use Data::LinkedList::Entry;
 
-our $VERSION = '0.1';
+our $VERSION = '0.01';
 
 sub new {
     my ($class, %params) = @_;
@@ -19,9 +19,9 @@ sub new {
         list          => undef,
     };
 
-	while (my ($key, $value) = each %params) {
-		$self->{$key} = $value if exists $self->{$key};
-	}
+    while (my ($key, $value) = each %params) {
+        $self->{$key} = $value if exists $self->{$key};
+    }
 
     $self->{known_mod} = $self->{list}->{mod_count};
     $self->{next} = $self->{list}->{last};
@@ -32,11 +32,9 @@ sub new {
 sub __check_mod {
     my $self = shift;
 
-    if ($self->{known_mod} != $self->{list}->{mod_count}) {
-        croak(qq(
-            Concurrent modification. Object modified whilst not in a permissible state.
-        ));
-    }
+    croak(qq(
+        Concurrent modification. Object modified whilst not in a permissible state.
+    )) if $self->{known_mod} != $self->{list}->{mod_count};
 }
 
 sub has_next {
@@ -45,11 +43,9 @@ sub has_next {
 
 sub next {
     my $self = shift;
-    $self->__check_mod();
 
-    if (not defined $self->{next}) {
-        croak 'No such element in list.';
-    }
+    $self->__check_mod();
+    croak 'No such element in list.' if (not defined $self->{next});
 
     --$self->{position};
     $self->{last_returned} = $self->{next};
@@ -59,13 +55,10 @@ sub next {
 
 sub remove {
     my $self = shift;
-    $self->__check_mod();
 
-    if (not defined $self->{last_returned}) {
-        croak(
-            'Illegal state. Subroutine invokved at an inappropriate time.'
-        );
-    }
+    $self->__check_mod();
+    croak 'Illegal state. Subroutine invokved at an inappropriate time.'
+        if not defined $self->{last_returned};
 
     $self->{list}->__remove_entry($self->{last_returned});
     $self->{last_returned} = undef;
@@ -78,7 +71,7 @@ __END__
 
 =head1 NAME
 
-Data::LinkedList::Iterator::ListIterator - A list iterator to iterate over the 
+Data::LinkedList::Iterator::ListIterator - A list iterator to iterate over the
 linked list in reverse order.
 
 =head1 DESCRIPTION
@@ -104,6 +97,10 @@ Returns the next entry in the list.
 =head3 remove
 
 Remove the most recently returned element from the list.
+
+=head1 AUTHOR
+
+Lloyd Griffiths
 
 =head1 COPYRIGHT
 

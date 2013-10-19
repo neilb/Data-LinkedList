@@ -6,7 +6,7 @@ use Carp;
 use Data::LinkedList;
 use Data::LinkedList::Entry;
 
-our $VERSION = '0.1';
+our $VERSION = '0.01';
 
 sub new {
     my ($class, %params) = @_;
@@ -40,11 +40,9 @@ sub new {
 sub __check_mod {
     my $self = shift;
 
-    if ($self->{known_mod} != $self->{list}->{mod_count}) {
-        croak(qq(
-            Concurrent modification. Object modified whilst not in a permissible state.
-        ));
-    }
+    croak(qq(
+        Concurrent modification. Object modified whilst not in a permissible state.
+    )) if $self->{known_mod} != $self->{list}->{mod_count};
 }
 
 sub next_index {
@@ -65,11 +63,9 @@ sub has_previous {
 
 sub next {
     my $self = shift;
-    $self->__check_mod();
 
-    if (not defined $self->{next}) {
-        croak 'No such element in list.';
-    }
+    $self->__check_mod();
+    croak 'No such element in list.' if not defined $self->{next};
 
     $self->{position}++;
     $self->{last_returned} = $self->{previous} = $self->{next};
@@ -79,11 +75,9 @@ sub next {
 
 sub previous {
     my $self = shift;
-    $self->__check_mod();
 
-    if (not defined $self->{previous}) {
-        croak 'No such element in list.';
-    }
+    $self->__check_mod();
+    croak 'No such element in list.' if not defined $self->{previous};
 
     $self->{position}--;
     $self->{last_returned} = $self->{next} = $self->{previous};
@@ -93,18 +87,12 @@ sub previous {
 
 sub remove {
     my $self = shift;
+
     $self->__check_mod();
+    croak 'Illegal state. The subroutine has been invokved at an  inappropriate time.'
+        if not defined $self->{last_returned};
 
-    if (not defined $self->{last_returned}) {
-        croak(
-            'Illegal state. The subroutine has been invokved at an  inappropriate time.'
-        );
-    }
-
-    if ($self->{last_returned} == $self->{previous}) {
-        $self->{position}--;
-    }
-
+    $self->{position}-- if $self->{last_returned} == $self->{previous};
     $self->{next} = $self->{last_returned}->{next};
     $self->{previous} = $self->{last_returned}->{previous};
     $self->{list}->__remove_entry($self->{last_returned});
@@ -114,8 +102,10 @@ sub remove {
 
 sub add {
     my ($self, $element) = @_;
+
     $self->{list}->__check_parameter_count(2, scalar @_);
     $self->__check_mod();
+
     $self->{list}->{mod_count}++;
     $self->{known_mod}++;
     $self->{list}->{size}++;
@@ -125,17 +115,13 @@ sub add {
     $entry->{previous} = $self->{previous};
     $entry->{next} = $self->{next};
 
-    if (defined $self->{previous}) {
-        $self->{previous}->{next} = $entry;
-    } else {
-        $self->{first} = $entry;
-    }
+    (defined $self->{previous})
+        ? $self->{previous}->{next} = $entry
+        : $self->{first} = $entry;
 
-    if (defined $self->{next}) {
-        $self->{next}->{previous} = $entry;
-    } else {
-        $self->{list}->{last} = $entry;
-    }
+    (defined $self->{next})
+        ? $self->{next}->{previous} = $entry
+        : $self->{list}->{last} = $entry;
 
     $self->{previous} = $entry;
     $self->{last_returned} = undef;
@@ -143,13 +129,12 @@ sub add {
 
 sub set {
     my ($self, $element) = @_;
+
     $self->{list}->__check_parameter_count(2, scalar @_);
     $self->__check_mod();
 
     if (not defined $self->{last_returned}) {
-        croak(
-            'Illegal state. The subroutine has been invokved at an  inappropriate time.'
-        );
+        croak 'Illegal state. The subroutine has been invokved at an  inappropriate time.'
     } else {
         $self->{last_returned}->{data} = $element;
     }
@@ -210,6 +195,10 @@ Add an entry between the previous and next element and advance to the next eleme
 =head3 set
 
 Change the entry data of the most recently returned entry.
+
+=head1 AUTHOR
+
+Lloyd Griffiths
 
 =head1 COPYRIGHT
 

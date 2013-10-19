@@ -6,11 +6,12 @@ use warnings;
 use Carp;
 use Storable;
 use Iterator::Util;
+
 use Data::LinkedList::Entry;
 use Data::LinkedList::Iterator::ListIterator;
 use Data::LinkedList::Iterator::DescendingIterator;
 
-our $VERSION = '0.1';
+our $VERSION = '0.01';
 
 sub new {
     return bless {
@@ -26,7 +27,7 @@ sub __get_entry {
 
     # We can work out if we should traverse the list
     # from the beginning or end depending on the
-    # position of the element
+    # element number
     if ($number < ($self->{size} / 2)) {
         $entry = $self->{first};
         $entry = $entry->{next} while $number-- > 0;
@@ -40,19 +41,29 @@ sub __get_entry {
 
 sub __remove_entry {
     my ($self, $entry) = @_;
+
     $self->{mod_count}++;
     $self->{size}--;
 
     if ($self->{size} == 0) {
+        # Undefine the first element in the list
         $self->{first} = $self->{last} = undef;
     } elsif ($entry == $self->{first}) {
+        # Reassign the first entry to the next in the list
         $self->{first} = $entry->{next};
+        # Undefine the reference to the previous entry
+        # which was the previous first entry
         $entry->{next}->{previous} = undef;
     } elsif ($entry == $self->{last}) {
+        # Reassign the last entry to the previous in the list
         $self->{last} = $entry->{previous};
+        # Undefine the reference to the next entry which
+        # was the previous last entry
         $entry->{previous}->{next} = undef;
     } else {
+        # Reassign the previous of the next entry to this previous entry
         $entry->{next}->{previous} = $entry->{previous};
+        # Reassign the next of the previous entry to this next entry
         $entry->{previous}->{next} = $entry->{next};
     }
 }
@@ -61,9 +72,13 @@ sub __add_last_entry {
     my ($self, $entry) = @_;
 
     if ($self->{size} == 0) {
+        # Assign the entry to the first and last entries
         $self->{first} = $self->{last} = $entry;
     } else {
+        # Assign the current last entry as the entry before
+        # the new entry
         $entry->{previous} = $self->{last};
+        # Assign the new entry to the last entry in the list
         $self->{last}->{next} = $entry;
         $self->{last} = $entry;
     }
@@ -74,99 +89,82 @@ sub __add_last_entry {
 sub __check_bounds_inclusive {
     my ($self, $index) = @_;
 
-    if ($index < 0 or $index > $self->{size}) {
-        croak(qq(
-            Index out of bounds: The index provided was out of range.
-            Index: $index Size: $self->{size}
-        ));
-    }
+    croak(qq(
+        Index out of bounds: The index provided was out of range.
+        Index: $index Size: $self->{size}
+    )) if ($index < 0) or ($index > $self->{size});
 }
 
 sub __check_bounds_exclusive {
     my ($self, $index) = @_;
 
-    if ($index < 0 or $index >= $self->{size}) {
-        croak(qq(
-            Index out of bounds: The index provided was out of range.
-            Index: $index Size: $self->{size}
-        ));
-    }
+    croak(qq(
+        Index out of bounds: The index provided was out of range.
+        Index: $index Size: $self->{size}
+    )) if ($index < 0) or ($index >= $self->{size});
 }
 
 sub __check_parameter_count {
     my ($self, $expected, $actual) = @_;
-    
-    if ($actual < $expected) {
-        croak(qq(
-            Expected $expected parameters but got $actual
-        ));
-    }
+
+    croak(qq(
+        Expected $expected parameters but got $actual
+    )) if $actual < $expected;
 }
 
 sub get_first {
     my $self = shift;
 
-    if ($self->{size} == 0) {
-        croak 'No such element in list.';
-    } else {
-        return $self->{first}->{data};
-    }
+    ($self->{size} == 0)
+        ? croak 'No such element in list.'
+        : return $self->{first}->{data};
 }
 
 sub get_last {
     my $self = shift;
 
-    if ($self->{size} == 0) {
-        croak 'No such element in list.';
-    } else {
-        return $self->{last}->{data};
-    }
+    ($self->{size} == 0)
+        ? croak 'No such element in list.'
+        : return $self->{last}->{data};
 }
 
 sub remove_first {
     my $self = shift;
 
-    if ($self->{size} == 0) {
-        croak 'No such element in list.';
-    } else {
-        my $removed = $self->{first}->{data};
-        $self->{mod_count}++;
-        $self->{size}--;
+    croak 'No such element in list.' if $self->{size} == 0;
 
-        if (defined $self->{first}->{next}) {
-            $self->{first}->{next}->{previous} = undef;
-        } else {
-            $self->{last} = undef;
-        }
+    my $removed = $self->{first}->{data};
+    $self->{mod_count}++;
+    $self->{size}--;
 
-        $self->{first} = $self->{first}->{next};
-        return $removed;
-    }
+    (defined $self->{first}->{next})
+        ? $self->{first}->{next}->{previous} = undef
+        : $self->{last} = undef;
+
+    $self->{first} = $self->{first}->{next};
+    return $removed;
 }
 
 sub remove_last {
     my $self = shift;
 
-    if ($self->{size} == 0) {
-        croak 'No such element in list.';
-    } else {
-        my $removed = $self->{last}->{data};
-        $self->{mod_count}++;
-        $self->{size}--;
+    croak 'No such element in list.' if $self->{size} == 0;
 
-        if (defined $self->{last}->{previous}) {
-            $self->{last}->{previous}->{next} = undef;
-        } else {
-            $self->{first} = undef;
-        }
+    my $removed = $self->{last}->{data};
+    $self->{mod_count}++;
+    $self->{size}--;
 
-        $self->{last} = $self->{last}->{previous};
-        return $removed;
-    }
+    (defined $self->{last}->{previous})
+        ? $self->{last}->{previous}->{next} = undef
+        : $self->{first} = undef;
+
+    $self->{last} = $self->{last}->{previous};
+    return $removed;
 }
 
 sub add_first {
     my ($self, $element) = @_;
+
     $self->__check_parameter_count(2, scalar @_);
     my $entry = Data::LinkedList::Entry->new(data => $element);
 
@@ -190,6 +188,7 @@ sub add_last {
 
 sub contains {
     my ($self, $element) = @_;
+
     $self->__check_parameter_count(2, scalar @_);
     my $entry = $self->{first};
 
@@ -216,6 +215,7 @@ sub add {
 
 sub remove {
     my ($self, $element) = @_;
+
     $self->__check_parameter_count(2, scalar @_);
     my $entry = $self->{first};
 
@@ -233,57 +233,72 @@ sub remove {
 
 sub add_all {
     my ($self, @array) = @_;
+
     $self->__check_parameter_count(2, scalar @_);
     return $self->add_all_at($self->{size}, @array);
 }
 
 sub add_all_at {
     my ($self, $index, @array) = @_;
+
     $self->__check_parameter_count(3, scalar @_);
     $self->__check_bounds_inclusive($index);
-    my $size = scalar @array;
 
-    if ($size == 0) {
-        return 0;
-    }
+    my $size = scalar @array;
+    return 0 if $size == 0;
 
     my ($iterator, $after, $before) = (
         Iterator::Util::ilist(@array), undef, undef
     );
 
     if ($index != $self->{size}) {
+        # The index is not the same as the last element in the list
+        # so we need to get the element which will go after the inserted
+        # elements
         $after = $self->__get_entry($index);
+        # The element which will be before the inserted elements
         $before = $after->{previous};
     } else {
+        # The elements are being inserted at the end of the list so
+        # we get the current element that is at the end of the list
         $before = $self->{last};
     }
 
+    # Create a new entry with the data of the first element to add
     my $entry = Data::LinkedList::Entry->new(data => $iterator->value());
     my ($previous, $first_new) = ($entry, $entry);
+
+    # Set the previous entry of the new entry to the element that it is
+    # being inserted after
     $entry->{previous} = $before;
 
     for (my $position = 1; ($position < $size); $position++) {
+        # Link each of the elements that are in the array
         $entry = Data::LinkedList::Entry->new(data => $iterator->value());
         $entry->{previous} = $previous;
         $previous->{next} = $entry;
         $previous = $entry;
     }
 
+    # Link the remaing elements of the list to the last new entry of the list
     $previous->{next} = $after;
+
     $self->{mod_count}++;
     $self->{size} += $size;
 
-    if (defined $after) {
-        $after->{previous} = $entry;
-    } else {
-        $self->{last} = $entry;
-    }
+    (defined $after)
+        # Link the elements which follow the newly added array
+        ? $after->{previous} = $entry
+        # Otherwise the lastest entry is the last in the list
+        : $self->{last} = $entry;
 
-    if (defined $before) {
-        $before->{next} = $first_new;
-    } else {
-        $self->{first} = $first_new;
-    }
+    (defined $before)
+        # Link the element before the array to the first element
+        # in the array
+        ? $before->{next} = $first_new
+        # Otherwise the first element in the list is the first element
+        # in the array
+        : $self->{first} = $first_new;
 
     return 1;
 }
@@ -301,6 +316,7 @@ sub clear {
 
 sub get {
     my ($self, $index) = @_;
+
     $self->__check_parameter_count(2, scalar @_);
     $self->__check_bounds_exclusive($index);
     return $self->__get_entry($index)->{data};
@@ -308,8 +324,10 @@ sub get {
 
 sub set {
     my ($self, $index, $element) = @_;
+
     $self->__check_parameter_count(3, scalar @_);
     $self->__check_bounds_exclusive($index);
+
     my $entry = $self->__get_entry($index);
     my $old = $entry->{data};
     $entry->{data} = $element;
@@ -318,21 +336,28 @@ sub set {
 
 sub insert {
     my ($self, $index, $element) = @_;
+
     $self->__check_parameter_count(3, scalar @_);
     $self->__check_bounds_inclusive($index);
     my $entry = Data::LinkedList::Entry->new(data => $element);
 
     if ($index < $self->{size}) {
+        # Store the element that will follow the inserted element
         my $after = $self->__get_entry($index);
+
+        # Link the following entry to the new entry
         $entry->{next} = $after;
+        # Set the previous entry for the new entry
         $entry->{previous} = $after->{previous};
         $self->{mod_count}++;
 
-        if (not defined $after->{previous}) {
-            $self->{first} = $entry;
-        } else {
-            $after->{previous}->{next} = $entry;
-        }
+        (not defined $after->{previous})
+            # If there is no previous element assign
+            # the entry as the first in the list
+            ? $self->{first} = $entry
+            # Otherwise set the next entry of the previous
+            # to the new entry
+            : $after->{previous}->{next} = $entry;
 
         $after->{previous}->{next} = $entry;
         $after->{previous} = $entry;
@@ -344,8 +369,10 @@ sub insert {
 
 sub remove_at {
     my ($self, $index) = @_;
+
     $self->__check_parameter_count(2, scalar @_);
     $self->__check_bounds_exclusive($index);
+
     my $entry = $self->__get_entry($index);
     $self->__remove_entry($entry);
     return $entry->{data};
@@ -353,6 +380,7 @@ sub remove_at {
 
 sub index_of {
     my ($self, $element) = @_;
+
     $self->__check_parameter_count(2, scalar @_);
     my ($index, $entry) = (0, $self->{first});
 
@@ -370,6 +398,7 @@ sub index_of {
 
 sub last_index_of {
     my ($self, $element) = @_;
+
     $self->__check_parameter_count(2, scalar @_);
     my ($index, $entry) = (($self->{size} - 1), $self->{last});
 
@@ -407,12 +436,18 @@ sub element {
 
 sub peek {
     my $self = shift;
-    $self->{size} == 0 ? return undef : return $self->get_first();
+
+    $self->{size} == 0
+        ? return undef
+        : return $self->get_first();
 }
 
 sub poll {
     my $self = shift;
-    $self->{size} == 0 ? return undef : return $self->remove_first();
+
+    $self->{size} == 0
+        ? return undef
+        : return $self->remove_first();
 }
 
 sub offer_first {
@@ -429,7 +464,10 @@ sub peek_first {
 
 sub peek_last {
     my $self = shift;
-    $self->{size} == 0 ? return undef : return $self->get_last();
+
+    $self->{size} == 0
+        ? return undef
+        : return $self->get_last();
 }
 
 sub poll_first {
@@ -438,7 +476,10 @@ sub poll_first {
 
 sub poll_last {
     my $self = shift;
-    $self->{size} == 0 ? return undef : return $self->remove_last();
+
+    $self->{size} == 0
+        ? return undef
+        : return $self->remove_last();
 }
 
 sub pop {
@@ -455,6 +496,7 @@ sub remove_first_occurrence {
 
 sub remove_last_occurrence {
     my ($self, $element) = @_;
+
     $self->__check_parameter_count(2, scalar @_);
     my $entry = $self->{last};
 
@@ -476,12 +518,14 @@ sub clone {
 
 sub write_object {
     my ($self, $filename) = @_;
+
     $self->__check_parameter_count(2, scalar @_);
     Storable::store \$self, $filename;
 }
 
 sub read_object {
     my ($self, $filename) = @_;
+
     $self->__check_parameter_count(2, scalar @_);
     my $entry = ${Storable::retrieve $filename, 1}->{first};
 
@@ -493,6 +537,7 @@ sub read_object {
 
 sub list_iterator {
     my ($self, $index) = @_;
+
     $self->__check_parameter_count(2, scalar @_);
     $self->__check_bounds_inclusive($index);
     return Data::LinkedList::Iterator::ListIterator->new(
@@ -518,10 +563,10 @@ Data::LinkedList - Perl implementation of the GNU Classpath LinkedList.
 =head1 SYNOPSIS
 
     #!/usr/bin/env perl -w
-        
+
     use strict;
     use Data::LinkedList;
-        
+
     my $list = Data::LinkedList->new();
 
     $list->add({ name => 'Lloyd', age => undef });
@@ -549,7 +594,7 @@ Data::LinkedList - Perl implementation of the GNU Classpath LinkedList.
 
 =head1 DESCRIPTION
 
-This module provides a doubly linked list data structure, as well as 
+This module provides a doubly linked list data structure, as well as
 iterators to walk through the list.
 
 =head1 METHODS
@@ -722,9 +767,16 @@ Please report any bugs to lloydg@cpan.org
 
 =head1 CREDITS
 
-Credits go to the authors of the GNU classpath implementation of 
-java.util.LinkedList class. The majority of this modules code has 
+Credits go to the authors of the GNU classpath implementation of
+java.util.LinkedList class. The majority of this modules code has
 been based on their prior work.
+
+=head1 SEE ALSO
+
+LinkedList::Single
+Data::LinkedList::Entry
+Data::LinkedList::Iterator::ListIterator
+Data::LinkedList::Iterator::DescendingIterator
 
 =head1 AUTHOR
 

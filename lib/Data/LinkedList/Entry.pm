@@ -3,7 +3,7 @@ package Data::LinkedList::Entry;
 use strict;
 use warnings;
 
-our $VERSION = '0.1';
+our $VERSION = '0.01';
 
 sub new {
     my ($class, %params) = @_;
@@ -32,7 +32,7 @@ Data::LinkedList::Entry - Object to represent an entry in the list.
 
 Each C< Entry > object has three properties:
 
-=over 
+=over
 
 =item C< data > The entry data. This can be anything from an integer to an array.
 
@@ -48,6 +48,10 @@ Each C< Entry > object has three properties:
 
 Instantiates and returns a new Data::LinkedList::Entry object. Doesn't require
 any parameters - the properties of the object can be set after instantiation.
+
+=head1 AUTHOR
+
+Lloyd Griffiths
 
 =head1 COPYRIGHT
 
