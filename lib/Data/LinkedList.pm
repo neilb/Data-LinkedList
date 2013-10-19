@@ -581,6 +581,9 @@ Data::LinkedList - Perl implementation of the GNU Classpath LinkedList.
     my $lisa = $list->remove_first(); # HashRef stored in $lisa
     my $bob  = $list->remove_last();  # HashRef stored in $bob
 
+    $list->offer_last($lisa);
+    CORE::say $list->remove_first_occurrence($lisa); # 1 (true)
+
     CORE::say $list->size(); # 2
 
     $list->add_all_at(1, ($lisa, $bob));
