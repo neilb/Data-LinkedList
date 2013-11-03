@@ -154,11 +154,11 @@ Data::LinkedList::Iterator::ListIterator - A list iterator to walk through a lin
 
     use strict;
     use Data::LinkedList;
-        
+
     my $list = Data::LinkedList->new();
     $list->add_all(1, 2, 3, 4, 5);
-        
-    my $iterator = $list->list_iterator(0);      
+
+    my $iterator = $list->list_iterator(0);
     CORE::say $iterator->next() while $iterator->has_next();
 
 =head1 DESCRIPTION

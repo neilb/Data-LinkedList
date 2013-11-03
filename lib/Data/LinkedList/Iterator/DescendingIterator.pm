@@ -80,10 +80,10 @@ linked list in reverse order.
 
     use strict;
     use Data::LinkedList;
-    
+
     my $list = Data::LinkedList->new();
     $list->add_all(1, 2, 3, 4, 5);
-    
+
     my $iterator = $list->descending_iterator();
     CORE::say $iterator->next() while $iterator->has_next();
 
@@ -102,7 +102,7 @@ index for the iterator is that of the last element in the list.
         list => Data::LinkedList->new() # Required for construction.
                                         # Won't complain if not passed, but will fail miserably.
     );
-        
+
 =head3 has_next
 
 Returns a boolean value to represent if there is a next entry in the list.

@@ -615,7 +615,7 @@ Return the first element in the list.
     $list->get_first();
 
 =head3 get_last
-    
+
 Return the last element in the list.
 
     $list->get_last();
@@ -796,7 +796,7 @@ if the list has a size of zero.
 
 =head3 pop
 
-Pops an element from the stack by removing and returning the first element 
+Pops an element from the stack by removing and returning the first element
 in the list. Equivalent to remove_first. Alias of C<remove_first>.
 
     $list->pop();
