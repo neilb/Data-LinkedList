@@ -146,11 +146,24 @@ __END__
 
 =head1 NAME
 
-Data::LinkedList::Iterator::ListIterator - A list iterator to iterate over the linked list.
+Data::LinkedList::Iterator::ListIterator - A list iterator to walk through a linked list.
+
+=head1 SYNOPSIS
+
+    #!/usr/bin/env perl -w
+
+    use strict;
+    use Data::LinkedList;
+        
+    my $list = Data::LinkedList->new();
+    $list->add_all(1, 2, 3, 4, 5);
+        
+    my $iterator = $list->list_iterator(0);      
+    CORE::say $iterator->next() while $iterator->has_next();
 
 =head1 DESCRIPTION
 
-The list iterator walks through the linked list in sequential order.
+The list iterator walks through a linked list in sequential order.
 
 =head1 METHODS
 
@@ -159,41 +172,64 @@ The list iterator walks through the linked list in sequential order.
 Instantiates and returns a new Data::LinkedList::Iterator::ListIterator object. The starting
 index for the iterator has to be passed to the object upon construction.
 
+    my $list_iterator = Data::LinkedList::Iterator::ListIterator->new(
+        list => Data::LinkedList->new() # Required for construction.
+                                        # Won't complain if not passed, but will fail miserably.
+    );
+
 =head3 next_index
 
 Returns the position of the next entry.
+
+    $list_iterator->next_index();
 
 =head3 previous_index
 
 Returns the position of the previous entry.
 
+    $list_iterator->previous_index();
+
 =head3 has_next
 
 Returns a boolean value to represent if there is a next entry in the list.
+
+    $list_iterator->has_next();
 
 =head3 has_previous
 
 Returns a boolean value to represent if there is a previous entry in the list.
 
+    $list_iterator->has_previous();
+
 =head3 next
 
 Returns the next entry in the list.
+
+    $list_iterator->next();
 
 =head3 previous
 
 Returns the previous entry in the list.
 
+    $list_iterator->previous();
+
 =head3 remove
 
 Remove the most recently returned element from the list.
+
+    $list_iterator->remove();
 
 =head3 add
 
 Add an entry between the previous and next element and advance to the next element.
 
+    $list_iterator->add($element);
+
 =head3 set
 
 Change the entry data of the most recently returned entry.
+
+    $list_iterator->set($element);
 
 =head1 BUGS
 
