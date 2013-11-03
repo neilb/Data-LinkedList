@@ -2,6 +2,7 @@ package Data::LinkedList::Iterator::ListIterator;
 
 use strict;
 use warnings;
+
 use Carp;
 use Data::LinkedList;
 use Data::LinkedList::Entry;

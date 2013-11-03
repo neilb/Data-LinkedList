@@ -6,7 +6,6 @@ use warnings;
 use Carp;
 use Storable;
 use Iterator::Util;
-
 use Data::LinkedList::Entry;
 use Data::LinkedList::Iterator::ListIterator;
 use Data::LinkedList::Iterator::DescendingIterator;
