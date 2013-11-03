@@ -30,15 +30,15 @@ Data::LinkedList::Entry - Object to represent an entry in the list.
 
 =head1 DESCRIPTION
 
-Each C< Entry > object has three properties:
+Each C<Entry> object has three properties:
 
 =over
 
-=item C< data > The entry data. This can contain data type, including data structures.
+=item C<data> The entry data. This can contain data type, including data structures.
 
-=item C< next > The next entry in the list.
+=item C<next> The next entry in the list.
 
-=item C< previous > The previous entry in the list.
+=item C<previous> The previous entry in the list.
 
 =back
 
