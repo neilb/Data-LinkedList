@@ -606,163 +606,249 @@ iterators to walk through the list.
 
 Create an instance of an empty doubly linked list.
 
+    my $list = Data::LinkedList->new();
+
 =head3 get_first
 
 Return the first element in the list.
 
-=head3 get_last
+    $list->get_first();
 
+=head3 get_last
+    
 Return the last element in the list.
+
+    $list->get_last();
 
 =head3 remove_first
 
 Remove and return the first element in the list.
 
+    $list->remove_first();
+
 =head3 remove_last
 
 Remove and return the last element in the list.
+
+    $list->remove_last();
 
 =head3 add_first
 
 Insert an element at the front of the list.
 
+    $list->add_first($element);
+
 =head3 add_last
 
 Insert an element at the end of the list.
+
+    $list->add_last($element);
 
 =head3 contains
 
 Return true if the list contains the given value.
 
+    $list->contains($element);
+
 =head3 size
 
 Return the current size of the list.
+
+    $list->size();
 
 =head3 add
 
 Adds an element to the end of the list.
 
+    $list->add($element);
+
 =head3 remove
 
 Removes and returns the first element of the list.
+
+    $list->remove();
 
 =head3 add_all
 
 Append a list of elements to the end of the list.
 
+    $list->add_all(@elements);
+
 =head3 add_all_at
 
 Add a list of elements at the given position of the list.
+
+    $list->add_all_at($index, @elements);
 
 =head3 clear
 
 Remove all elements from the list.
 
+    $list->clear();
+
 =head3 get
 
 Return the element which is at the given index.
+
+    $list->get($index);
 
 =head3 set
 
 Replace the element at the given index of the list.
 
+    $list->set($index, $element);
+
 =head3 insert
 
 Inserts an element into the given position of the list.
+
+    $list->insert($index, $element);
 
 =head3 remove_at
 
 Remove an element from the given position.
 
+    $list->remove_at($index);
+
 =head3 index_of
 
 Returns the first index of the given element.
+
+    $list->index_of($element);
 
 =head3 last_index_of
 
 Returns the last index of the given element.
 
+    $list->last_index_of($element);
+
 =head3 to_array
 
 Returns an array which contains the elements of the list in order.
 
+    $list->to_array();
+
 =head3 offer
 
-Add an element to the end of the list.
+Add an element to the end of the list. An alias of C<add>.
+
+    $list->offer($element);
 
 =head3 element
 
-Returns the first element in the list without removing it.
+Returns the first element in the list without removing it. An alias of C<get_first>.
+
+    $list->element();
 
 =head3 peek
 
-Returns the first element in the list without removing it.
+Returns the first element in the list without removing it. Doesn't complain
+if the list has a size of zero.
+
+    $list->peek();
 
 =head3 poll
 
-Removes and returns the first element of the list.
+Removes and returns the first element of the list. Doesn't complain
+if the list has a size of zero.
+
+    $list->poll();
 
 =head3 offer_first
 
-Inserts an element at the front of the list.
+Inserts an element at the front of the list. Alias of C<add_first>.
+
+    $list->offer_first($element);
 
 =head3 offer_last
 
-Inserts an element at the end of the list.
+Inserts an element at the end of the list. Alias of C<add>.
+
+    $list->offer_last($element);
 
 =head3 peek_first
 
-Returns the first element of the list without removing it.
+Returns the first element of the list without removing it. Doesn't complain
+if the list has a size of zero. Alias of C<peek>.
+
+    $list->peek_first();
 
 =head3 peek_last
 
-Returns the last element of the list without removing it.
+Returns the last element of the list without removing it. Doesn't complain
+if the list has a size of zero.
+
+    $list->peek_last();
 
 =head3 poll_first
 
-Removes and returns the first element of the list.
+Removes and returns the first element of the list. Doesn't complain
+if the list has a size of zero. Alias of C<poll>.
+
+    $list->poll_first();
 
 =head3 poll_last
 
-Removes and returns the last element of the list.
+Removes and returns the last element of the list. Doesn't complain
+if the list has a size of zero.
+
+    $list->poll_last();
 
 =head3 pop
 
-Pops an element from the stack by removing and returning
-the first element in the list. Equivalent to remove_first.
+Pops an element from the stack by removing and returning the first element 
+in the list. Equivalent to remove_first. Alias of C<remove_first>.
+
+    $list->pop();
 
 =head3 push
 
 Pushes an element on to the stack by adding it to the front
-of the list. Equivalent to add_first.
+of the list. Equivalent to add_first. Alias of C<add_first>.
+
+    $list->push($element);
 
 =head3 remove_first_occurrence
 
-Removes the first occurrence of the specified element.
+Removes the first occurrence of the specified element. Alias of C<remove>.
+
+    $list->remove_first_occurrence($element);
 
 =head3 remove_last_occurrence
 
 Removes the last occurrence of the specified element.
 
+    $list->remove_last_occurrence($element);
+
 =head3 clone
 
 Create a deep clone of the linked list.
+
+    $list->clone();
 
 =head3 write_object
 
 Serializes the object and writes it to the given file name.
 
+    $list->write_object($filename);
+
 =head3 read_object
 
 Deserializes the object which is read from the given file name.
+
+    $list->read_object($filename);
 
 =head3 list_iterator
 
 Obtain a list iterator for list that starts at a given index.
 
+    $list->list_iterator($index);
+
 =head3 descending_iterator
 
-Obtain an Iterator for this list that traverses in reverse sequential order.
+Obtain an Iterator for the list that traverses in reverse sequential order.
+
+    $list->descending_iterator();
 
 =head1 BUGS
 
