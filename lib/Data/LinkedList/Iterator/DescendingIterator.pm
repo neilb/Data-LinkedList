@@ -71,8 +71,21 @@ __END__
 
 =head1 NAME
 
-Data::LinkedList::Iterator::ListIterator - A list iterator to iterate over the
+Data::LinkedList::Iterator::ListIterator - A list iterator to walk through a
 linked list in reverse order.
+
+=head1 SYNOPSIS
+
+    #!/usr/bin/env perl -w
+
+    use strict;
+    use Data::LinkedList;
+    
+    my $list = Data::LinkedList->new();
+    $list->add_all(1, 2, 3, 4, 5);
+    
+    my $iterator = $list->descending_iterator();
+    CORE::say $iterator->next() while $iterator->has_next();
 
 =head1 DESCRIPTION
 
@@ -85,17 +98,29 @@ The descending list iterator walks through the linked list in reverse sequential
 Instantiates and returns a new Data::LinkedList::Iterator::ListIterator object. The starting
 index for the iterator is that of the last element in the list.
 
+    my $descending_iterator = Data::LinkedList::Iterator::DescendingIterator->new(
+        list => Data::LinkedList->new() # Required for construction.
+                                        # Won't complain if not passed, but will fail miserably.
+    );
+        
+
 =head3 has_next
 
 Returns a boolean value to represent if there is a next entry in the list.
+
+    $descending_iterator->has_next();
 
 =head3 next
 
 Returns the next entry in the list.
 
+    $descending_iterator->next();
+
 =head3 remove
 
 Remove the most recently returned element from the list.
+
+    $descending_iterator->remove();
 
 =head1 BUGS
 
