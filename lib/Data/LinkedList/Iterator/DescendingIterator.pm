@@ -103,7 +103,6 @@ index for the iterator is that of the last element in the list.
                                         # Won't complain if not passed, but will fail miserably.
     );
         
-
 =head3 has_next
 
 Returns a boolean value to represent if there is a next entry in the list.
