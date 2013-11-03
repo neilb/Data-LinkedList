@@ -45,7 +45,7 @@ sub next {
     my $self = shift;
 
     $self->__check_mod();
-    croak 'No such element in list.' if (not defined $self->{next});
+    croak 'No such element in list.' if not defined $self->{next};
 
     --$self->{position};
     $self->{last_returned} = $self->{next};
