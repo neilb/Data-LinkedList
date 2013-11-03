@@ -150,8 +150,7 @@ Data::LinkedList::Iterator::ListIterator - A list iterator to iterate over the l
 
 =head1 DESCRIPTION
 
-This object keeps track of its position in the linked list as well as the next and previous
-entry for the current entry.
+The list iterator walks through the linked list in sequential order.
 
 =head1 METHODS
 
@@ -195,6 +194,10 @@ Add an entry between the previous and next element and advance to the next eleme
 =head3 set
 
 Change the entry data of the most recently returned entry.
+
+=head1 BUGS
+
+Please report any bugs to lloydg@cpan.org
 
 =head1 AUTHOR
 
