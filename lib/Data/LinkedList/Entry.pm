@@ -34,7 +34,7 @@ Each C< Entry > object has three properties:
 
 =over
 
-=item C< data > The entry data. This can be anything from an integer to an array.
+=item C< data > The entry data. This can contain data type, including data structures.
 
 =item C< next > The next entry in the list.
 
