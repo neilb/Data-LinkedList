@@ -1,4 +1,6 @@
 Revision history for Perl module Data::LinkedList
 
-0.1 2013-06-12
+0.01 2013-11-03
+    - First release to CPAN
     - original version; created by ExtUtils::ModuleMaker 0.51
+
